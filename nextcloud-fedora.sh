@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Script updated by unicows
 # Installation Script by Scott Alan Miller
