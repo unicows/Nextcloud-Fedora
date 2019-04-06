@@ -47,7 +47,9 @@ wget https://download.nextcloud.com/server/releases/nextcloud-15.0.5.zip
 unzip nextcloud-15.0.5.zip
 mkdir /var/www/html/nextcloud/data
 chown apache:apache -R /var/www/html/nextcloud
-mkdir "$datapath"
+if [ -d "$datapath" ]; then
+  mkdir -p "$datapath"
+fi
 chown apache:apache -R "$datapath"
 firewall-cmd --zone=FedoraServer --add-port=https/tcp --permanent #Server
 firewall-cmd --zone=public --add-port=https/tcp --permanent       #Minimal
