@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Script updated by unicows
 # Installation Script by Scott Alan Miller
@@ -89,14 +89,14 @@ sed -i -e 's/memory_limit = 128M/memory_limit = 512M/'                          
 systemctl restart php-fpm
 
 cd $ncpath
-chmod -R u+rw ${nccpath}/config/
-sudo -u apache php ${nccpath}/occ maintenance:install --database "mysql" --database-name "nextcloud" --database-user "ncuser" --database-pass $ncpass --admin-user $adminuser --admin-pass $adminpass --data-dir $datapath
+chmod -R u+rw ${ncpath}/config/
+sudo -u apache php ${ncpath}/occ maintenance:install --database "mysql" --database-name "nextcloud" --database-user "ncuser" --database-pass $ncpass --admin-user $adminuser --admin-pass $adminpass --data-dir $datapath
 sudo -u apache php ${ncpath}/occ config:system:set trusted_domains 1 --value=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
 if [ -n "$ncfqdn" ]
 then
   sudo -u apache php ${ncpath}/occ config:system:set trusted_domains 2 --value=$ncfqdn
 fi
-chmod -R u-w ${nccpath}/config/
+chmod -R u-w ${ncpath}/config/
 
 sed -i "$ d" /var/www/html/nextcloud/config/config.php
 echo "  'memcache.locking' => '\OC\Memcache\Redis'," >> /var/www/html/nextcloud/config/config.php
